@@ -33,34 +33,27 @@ REJECT_KEYWORDS = [
 def score_job(job):
     score = 0
 
-    role = job["role"].lower()
-    requirements = job["requirements"].lower()
-    location = job["location"].lower()
-    source = job["source"].lower()
+    role = job.get("role", "").lower()
+    requirements = job.get("requirements", "").lower()
+    location = job.get("location", "").lower()
+    source = job.get("source", "").lower()
 
-    # Role match
-    for target in TARGET_ROLES:
-        if target in role:
-            score += 40
-            break
+    if any(target in role for target in TARGET_ROLES):
+        score += 40
 
-    # Skills match
     for skill in SKILLS:
         if skill in requirements:
             score += 5
 
-    # Location preference
     if "remote" in location:
         score += 10
 
     if "hyderabad" in location:
         score += 10
 
-    # Trusted source
     if source in ["greenhouse", "lever"]:
         score += 20
 
-    # Scam detection
     for word in REJECT_KEYWORDS:
         if word in requirements:
             return 0
