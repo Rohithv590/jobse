@@ -1,0 +1,26 @@
+{
+  "roles": [
+    "Software Engineer Intern",
+    "Java Developer Intern",
+    "Backend Developer Intern",
+    "Full Stack Developer Intern",
+    "Associate Software Engineer",
+    "Graduate Engineer Trainee",
+    "Trainee Software Engineer"
+  ],
+  "locations": [
+    "Remote",
+    "Hyderabad",
+    "India"
+  ],
+  "min_match_score": 75,
+  "reject_keywords": [
+    "training fee",
+    "registration fee",
+    "investment",
+    "crypto",
+    "forex",
+    "mlm",
+    "data entry"
+  ]
+}
