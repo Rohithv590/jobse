@@ -9,16 +9,17 @@
     "Trainee Software Engineer"
   ],
   "locations": [
-  "Remote",
-  "Hyderabad",
-  "Bangalore",
-  "Pune",
-  "Chennai",
-  "Noida",
-  "Gurgaon"
-]
+    "Remote",
+    "Hyderabad",
+    "Bangalore",
+    "Pune",
+    "Chennai",
+    "Noida",
+    "Gurgaon"
   ],
   "min_match_score": 75,
+  "max_jobs_per_run": 10,
+  "experience_limit": 2,
   "reject_keywords": [
     "training fee",
     "registration fee",
