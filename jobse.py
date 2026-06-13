@@ -1,20 +1,22 @@
+import json
 import os
 import requests
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
 
-message = """
-JOBSE
+with open("config.json", "r") as f:
+    config = json.load(f)
 
-System Started Successfully
+message = f"""
+🚀 JOBSE CONFIG TEST
 
-Monitoring:
-✓ Java Internships
-✓ Software Engineer Internships
-✓ Full Stack Roles
+Max Jobs Per Run: {config['max_jobs_per_run']}
+Minimum Match Score: {config['min_match_score']}
+Experience Limit: {config['experience_limit']}
 
-Next update in 6 hours.
+Roles:
+{chr(10).join(config['roles'][:5])}
 """
 
 url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
@@ -27,4 +29,4 @@ requests.post(
     }
 )
 
-print("Message Sent")
+print("Config Loaded Successfully")
