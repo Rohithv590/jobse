@@ -9,9 +9,14 @@
     "Trainee Software Engineer"
   ],
   "locations": [
-    "Remote",
-    "Hyderabad",
-    "India"
+  "Remote",
+  "Hyderabad",
+  "Bangalore",
+  "Pune",
+  "Chennai",
+  "Noida",
+  "Gurgaon"
+]
   ],
   "min_match_score": 75,
   "reject_keywords": [
