@@ -1,39 +1,41 @@
 import os
 import json
 import requests
+
 from job_fetcher import fetch_jobs
+from job_filters import score_job
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
 
-# Load config
 with open("config.json", "r") as f:
     config = json.load(f)
 
-# Load sent jobs
-with open("sent_jobs.json", "r") as f:
-    sent_jobs = json.load(f)
-
 jobs = fetch_jobs()
 
-new_jobs = []
+filtered_jobs = []
 
 for job in jobs:
-    job_id = f"{job['company']}_{job['role']}"
+    score = score_job(job)
 
-    if job_id not in sent_jobs:
-        new_jobs.append(job)
-        sent_jobs.append(job_id)
+    if score >= config["min_match_score"]:
+        job["match_score"] = score
+        filtered_jobs.append(job)
 
-if not new_jobs:
-    message = "🚀 JOBSE\n\nNo new jobs found."
+filtered_jobs.sort(
+    key=lambda x: x["match_score"],
+    reverse=True
+)
+
+filtered_jobs = filtered_jobs[:config["max_jobs_per_run"]]
+
+if not filtered_jobs:
+    message = "🚀 JOBSE\n\nNo matching jobs found."
 else:
     message = "🚀 JOBSE\n\n"
 
-    for idx, job in enumerate(
-        new_jobs[:config["max_jobs_per_run"]],
-        start=1
-    ):
+    for idx, job in enumerate(filtered_jobs, start=1):
+
         message += f"""
 Job #{idx}
 
@@ -61,14 +63,13 @@ Source:
 Company Website:
 {job['website']}
 
+Match Score:
+{job['match_score']}%
+
 --------------------------------
+
 """
 
-# Save updated sent jobs
-with open("sent_jobs.json", "w") as f:
-    json.dump(sent_jobs, f, indent=2)
-
-# Send Telegram
 url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
 
 requests.post(
