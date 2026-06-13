@@ -1,12 +1,14 @@
+from datetime import datetime
+
 def fetch_jobs():
     return [
         {
-            "company": "Test Company",
-            "role": "Software Engineer Intern",
+            "company": "ABC Technologies",
+            "role": "Java Developer Intern",
             "location": "Remote",
-            "deadline": "Not Mentioned",
-            "requirements": "Java Git MySQL",
-            "apply_link": "https://example.com",
+            "deadline": "2026-06-30",
+            "requirements": "Java SQL Git",
+            "apply_link": "https://example.com/apply",
             "website": "https://example.com",
             "source": "TEST"
         }
