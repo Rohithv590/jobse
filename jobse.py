@@ -16,6 +16,7 @@ jobs = fetch_jobs()
 filtered_jobs = []
 
 for job in jobs:
+
     score = score_job(job)
 
     if score >= config["min_match_score"]:
@@ -27,14 +28,26 @@ filtered_jobs.sort(
     reverse=True
 )
 
-filtered_jobs = filtered_jobs[:config["max_jobs_per_run"]]
+filtered_jobs = filtered_jobs[
+    : config["max_jobs_per_run"]
+]
 
 if not filtered_jobs:
-    message = "🚀 JOBSE\n\nNo matching jobs found."
+
+    message = """
+🚀 JOBSE
+
+No matching fresher jobs found.
+"""
+
 else:
+
     message = "🚀 JOBSE\n\n"
 
-    for idx, job in enumerate(filtered_jobs, start=1):
+    for idx, job in enumerate(
+        filtered_jobs,
+        start=1
+    ):
 
         message += f"""
 Job #{idx}
@@ -44,9 +57,6 @@ Company:
 
 Role:
 {job['role']}
-
-Requirements:
-{job['requirements']}
 
 Application Deadline:
 {job['deadline']}
@@ -70,7 +80,10 @@ Match Score:
 
 """
 
-url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
+url = (
+    f"https://api.telegram.org/bot"
+    f"{BOT_TOKEN}/sendMessage"
+)
 
 requests.post(
     url,
